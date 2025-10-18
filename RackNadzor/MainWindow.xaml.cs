@@ -26,5 +26,21 @@ namespace RackNadzor
             MainFrame.Navigate(new DevicePage());
             Manager.MainFrame = MainFrame;
         }
+
+        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.GoBack();
+        }
+
+        private void MainFrame_ContentRendered(object sender, EventArgs e)
+        {
+            if (MainFrame.CanGoBack) {
+                BackBtn.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BackBtn.Visibility = Visibility.Hidden;
+            }
+        }
     }
 }

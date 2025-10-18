@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище RackBDModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DataCenters">
+          <Key>
+            <PropertyRef Name="DataCenterID" />
+          </Key>
+          <Property Name="DataCenterID" Type="int" Nullable="false" />
+          <Property Name="DataCenterName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DataCenterAddress" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DataCenterStatus" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Devices">
+          <Key>
+            <PropertyRef Name="DeviceID" />
+          </Key>
+          <Property Name="DeviceID" Type="int" Nullable="false" />
+          <Property Name="DeviceDataCenters" Type="int" Nullable="false" />
+          <Property Name="DeviceRackName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DevicePositionInUnits" Type="int" Nullable="false" />
+          <Property Name="DeviceSizeInUnits" Type="int" Nullable="false" />
+          <Property Name="DeviceModel" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DeviceManufacturer" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DeviceSerialNumber" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DeviceTypeID" Type="int" Nullable="false" />
+          <Property Name="DeviceDomainName" Type="varchar" MaxLength="255" />
+          <Property Name="DeviceIP" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DeviceInspectionDate" Type="date" />
+        </EntityType>
+        <EntityType Name="DeviceTypes">
+          <Key>
+            <PropertyRef Name="DeviceTypeID" />
+          </Key>
+          <Property Name="DeviceTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeviceTypeName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DeviceTypeDescription" Type="text" />
+          <Property Name="DeviceTypeImage" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="PortConnections">
+          <Key>
+            <PropertyRef Name="ConnectionID" />
+          </Key>
+          <Property Name="ConnectionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PortA_ID" Type="int" Nullable="false" />
+          <Property Name="PortB_ID" Type="int" Nullable="false" />
+          <Property Name="ConnectionType" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Ports">
+          <Key>
+            <PropertyRef Name="PortID" />
+          </Key>
+          <Property Name="PortID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeviceID" Type="int" Nullable="false" />
+          <Property Name="PortNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PortSpeed" Type="varchar" MaxLength="20" />
+          <Property Name="PortType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PortStatus" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MacAdress" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Racks">
+          <Key>
+            <PropertyRef Name="RackDataCenterID" />
+            <PropertyRef Name="RackName" />
+          </Key>
+          <Property Name="RackDataCenterID" Type="int" Nullable="false" />
+          <Property Name="RackName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RackRow" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RackPosition" Type="int" Nullable="false" />
+          <Property Name="RackTotalUnits" Type="int" Nullable="false" />
+          <Property Name="RackDepth" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Devices__DeviceT__2C3393D0">
+          <End Role="DeviceTypes" Type="Self.DeviceTypes" Multiplicity="1" />
+          <End Role="Devices" Type="Self.Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceTypes">
+              <PropertyRef Name="DeviceTypeID" />
+            </Principal>
+            <Dependent Role="Devices">
+              <PropertyRef Name="DeviceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Racks__RackDataC__286302EC">
+          <End Role="DataCenters" Type="Self.DataCenters" Multiplicity="1" />
+          <End Role="Racks" Type="Self.Racks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataCenters">
+              <PropertyRef Name="DataCenterID" />
+            </Principal>
+            <Dependent Role="Racks">
+              <PropertyRef Name="RackDataCenterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Devices_Racks">
+          <End Role="Racks" Type="Self.Racks" Multiplicity="1" />
+          <End Role="Devices" Type="Self.Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Racks">
+              <PropertyRef Name="RackDataCenterID" />
+              <PropertyRef Name="RackName" />
+            </Principal>
+            <Dependent Role="Devices">
+              <PropertyRef Name="DeviceDataCenters" />
+              <PropertyRef Name="DeviceRackName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PortConnections_PortA">
+          <End Role="Ports" Type="Self.Ports" Multiplicity="1" />
+          <End Role="PortConnections" Type="Self.PortConnections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ports">
+              <PropertyRef Name="PortID" />
+            </Principal>
+            <Dependent Role="PortConnections">
+              <PropertyRef Name="PortA_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PortConnections_PortB">
+          <End Role="Ports" Type="Self.Ports" Multiplicity="1" />
+          <End Role="PortConnections" Type="Self.PortConnections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ports">
+              <PropertyRef Name="PortID" />
+            </Principal>
+            <Dependent Role="PortConnections">
+              <PropertyRef Name="PortB_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ports_Devices">
+          <End Role="Devices" Type="Self.Devices" Multiplicity="1" />
+          <End Role="Ports" Type="Self.Ports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="Ports">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище RackBDModelContainer">
+          <EntitySet Name="DataCenters" EntityType="Self.DataCenters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Devices" EntityType="Self.Devices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeviceTypes" EntityType="Self.DeviceTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PortConnections" EntityType="Self.PortConnections" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ports" EntityType="Self.Ports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Racks" EntityType="Self.Racks" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Devices__DeviceT__2C3393D0" Association="Self.FK__Devices__DeviceT__2C3393D0">
+            <End Role="DeviceTypes" EntitySet="DeviceTypes" />
+            <End Role="Devices" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Racks__RackDataC__286302EC" Association="Self.FK__Racks__RackDataC__286302EC">
+            <End Role="DataCenters" EntitySet="DataCenters" />
+            <End Role="Racks" EntitySet="Racks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Devices_Racks" Association="Self.FK_Devices_Racks">
+            <End Role="Racks" EntitySet="Racks" />
+            <End Role="Devices" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PortConnections_PortA" Association="Self.FK_PortConnections_PortA">
+            <End Role="Ports" EntitySet="Ports" />
+            <End Role="PortConnections" EntitySet="PortConnections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PortConnections_PortB" Association="Self.FK_PortConnections_PortB">
+            <End Role="Ports" EntitySet="Ports" />
+            <End Role="PortConnections" EntitySet="PortConnections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ports_Devices" Association="Self.FK_Ports_Devices">
+            <End Role="Devices" EntitySet="Devices" />
+            <End Role="Ports" EntitySet="Ports" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RackBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DataCenters">
+          <Key>
+            <PropertyRef Name="DataCenterID" />
+          </Key>
+          <Property Name="DataCenterID" Type="Int32" Nullable="false" />
+          <Property Name="DataCenterName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DataCenterAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DataCenterStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Racks" Relationship="Self.FK__Racks__RackDataC__286302EC" FromRole="DataCenters" ToRole="Racks" />
+        </EntityType>
+        <EntityType Name="Devices">
+          <Key>
+            <PropertyRef Name="DeviceID" />
+          </Key>
+          <Property Name="DeviceID" Type="Int32" Nullable="false" />
+          <Property Name="DeviceDataCenters" Type="Int32" Nullable="false" />
+          <Property Name="DeviceRackName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DevicePositionInUnits" Type="Int32" Nullable="false" />
+          <Property Name="DeviceSizeInUnits" Type="Int32" Nullable="false" />
+          <Property Name="DeviceModel" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DeviceManufacturer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DeviceSerialNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DeviceTypeID" Type="Int32" Nullable="false" />
+          <Property Name="DeviceDomainName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DeviceIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DeviceInspectionDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="DeviceTypes" Relationship="Self.FK__Devices__DeviceT__2C3393D0" FromRole="Devices" ToRole="DeviceTypes" />
+          <NavigationProperty Name="Racks" Relationship="Self.FK_Devices_Racks" FromRole="Devices" ToRole="Racks" />
+          <NavigationProperty Name="Ports" Relationship="Self.FK_Ports_Devices" FromRole="Devices" ToRole="Ports" />
+        </EntityType>
+        <EntityType Name="DeviceTypes">
+          <Key>
+            <PropertyRef Name="DeviceTypeID" />
+          </Key>
+          <Property Name="DeviceTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeviceTypeName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DeviceTypeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DeviceTypeImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Devices" Relationship="Self.FK__Devices__DeviceT__2C3393D0" FromRole="DeviceTypes" ToRole="Devices" />
+        </EntityType>
+        <EntityType Name="PortConnections">
+          <Key>
+            <PropertyRef Name="ConnectionID" />
+          </Key>
+          <Property Name="ConnectionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PortA_ID" Type="Int32" Nullable="false" />
+          <Property Name="PortB_ID" Type="Int32" Nullable="false" />
+          <Property Name="ConnectionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Ports" Relationship="Self.FK_PortConnections_PortA" FromRole="PortConnections" ToRole="Ports" />
+          <NavigationProperty Name="Ports1" Relationship="Self.FK_PortConnections_PortB" FromRole="PortConnections" ToRole="Ports" />
+        </EntityType>
+        <EntityType Name="Ports">
+          <Key>
+            <PropertyRef Name="PortID" />
+          </Key>
+          <Property Name="PortID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeviceID" Type="Int32" Nullable="false" />
+          <Property Name="PortNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PortSpeed" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PortType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PortStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MacAdress" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Devices" Relationship="Self.FK_Ports_Devices" FromRole="Ports" ToRole="Devices" />
+          <NavigationProperty Name="PortConnections" Relationship="Self.FK_PortConnections_PortA" FromRole="Ports" ToRole="PortConnections" />
+          <NavigationProperty Name="PortConnections1" Relationship="Self.FK_PortConnections_PortB" FromRole="Ports" ToRole="PortConnections" />
+        </EntityType>
+        <EntityType Name="Racks">
+          <Key>
+            <PropertyRef Name="RackDataCenterID" />
+            <PropertyRef Name="RackName" />
+          </Key>
+          <Property Name="RackDataCenterID" Type="Int32" Nullable="false" />
+          <Property Name="RackName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RackRow" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RackPosition" Type="Int32" Nullable="false" />
+          <Property Name="RackTotalUnits" Type="Int32" Nullable="false" />
+          <Property Name="RackDepth" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DataCenters" Relationship="Self.FK__Racks__RackDataC__286302EC" FromRole="Racks" ToRole="DataCenters" />
+          <NavigationProperty Name="Devices" Relationship="Self.FK_Devices_Racks" FromRole="Racks" ToRole="Devices" />
+        </EntityType>
+        <Association Name="FK__Racks__RackDataC__286302EC">
+          <End Role="DataCenters" Type="Self.DataCenters" Multiplicity="1" />
+          <End Role="Racks" Type="Self.Racks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataCenters">
+              <PropertyRef Name="DataCenterID" />
+            </Principal>
+            <Dependent Role="Racks">
+              <PropertyRef Name="RackDataCenterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Devices__DeviceT__2C3393D0">
+          <End Role="DeviceTypes" Type="Self.DeviceTypes" Multiplicity="1" />
+          <End Role="Devices" Type="Self.Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceTypes">
+              <PropertyRef Name="DeviceTypeID" />
+            </Principal>
+            <Dependent Role="Devices">
+              <PropertyRef Name="DeviceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Devices_Racks">
+          <End Role="Racks" Type="Self.Racks" Multiplicity="1" />
+          <End Role="Devices" Type="Self.Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Racks">
+              <PropertyRef Name="RackDataCenterID" />
+              <PropertyRef Name="RackName" />
+            </Principal>
+            <Dependent Role="Devices">
+              <PropertyRef Name="DeviceDataCenters" />
+              <PropertyRef Name="DeviceRackName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ports_Devices">
+          <End Role="Devices" Type="Self.Devices" Multiplicity="1" />
+          <End Role="Ports" Type="Self.Ports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="Ports">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PortConnections_PortA">
+          <End Role="Ports" Type="Self.Ports" Multiplicity="1" />
+          <End Role="PortConnections" Type="Self.PortConnections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ports">
+              <PropertyRef Name="PortID" />
+            </Principal>
+            <Dependent Role="PortConnections">
+              <PropertyRef Name="PortA_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PortConnections_PortB">
+          <End Role="Ports" Type="Self.Ports" Multiplicity="1" />
+          <End Role="PortConnections" Type="Self.PortConnections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ports">
+              <PropertyRef Name="PortID" />
+            </Principal>
+            <Dependent Role="PortConnections">
+              <PropertyRef Name="PortB_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RackBDEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DataCenters" EntityType="Self.DataCenters" />
+          <EntitySet Name="Devices" EntityType="Self.Devices" />
+          <EntitySet Name="DeviceTypes" EntityType="Self.DeviceTypes" />
+          <EntitySet Name="PortConnections" EntityType="Self.PortConnections" />
+          <EntitySet Name="Ports" EntityType="Self.Ports" />
+          <EntitySet Name="Racks" EntityType="Self.Racks" />
+          <AssociationSet Name="FK__Racks__RackDataC__286302EC" Association="Self.FK__Racks__RackDataC__286302EC">
+            <End Role="DataCenters" EntitySet="DataCenters" />
+            <End Role="Racks" EntitySet="Racks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Devices__DeviceT__2C3393D0" Association="Self.FK__Devices__DeviceT__2C3393D0">
+            <End Role="DeviceTypes" EntitySet="DeviceTypes" />
+            <End Role="Devices" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Devices_Racks" Association="Self.FK_Devices_Racks">
+            <End Role="Racks" EntitySet="Racks" />
+            <End Role="Devices" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ports_Devices" Association="Self.FK_Ports_Devices">
+            <End Role="Devices" EntitySet="Devices" />
+            <End Role="Ports" EntitySet="Ports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PortConnections_PortA" Association="Self.FK_PortConnections_PortA">
+            <End Role="Ports" EntitySet="Ports" />
+            <End Role="PortConnections" EntitySet="PortConnections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PortConnections_PortB" Association="Self.FK_PortConnections_PortB">
+            <End Role="Ports" EntitySet="Ports" />
+            <End Role="PortConnections" EntitySet="PortConnections" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище RackBDModelContainer" CdmEntityContainer="RackBDEntities">
+          <EntitySetMapping Name="DataCenters">
+            <EntityTypeMapping TypeName="RackBDModel.DataCenters">
+              <MappingFragment StoreEntitySet="DataCenters">
+                <ScalarProperty Name="DataCenterID" ColumnName="DataCenterID" />
+                <ScalarProperty Name="DataCenterName" ColumnName="DataCenterName" />
+                <ScalarProperty Name="DataCenterAddress" ColumnName="DataCenterAddress" />
+                <ScalarProperty Name="DataCenterStatus" ColumnName="DataCenterStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Devices">
+            <EntityTypeMapping TypeName="RackBDModel.Devices">
+              <MappingFragment StoreEntitySet="Devices">
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="DeviceDataCenters" ColumnName="DeviceDataCenters" />
+                <ScalarProperty Name="DeviceRackName" ColumnName="DeviceRackName" />
+                <ScalarProperty Name="DevicePositionInUnits" ColumnName="DevicePositionInUnits" />
+                <ScalarProperty Name="DeviceSizeInUnits" ColumnName="DeviceSizeInUnits" />
+                <ScalarProperty Name="DeviceModel" ColumnName="DeviceModel" />
+                <ScalarProperty Name="DeviceManufacturer" ColumnName="DeviceManufacturer" />
+                <ScalarProperty Name="DeviceSerialNumber" ColumnName="DeviceSerialNumber" />
+                <ScalarProperty Name="DeviceTypeID" ColumnName="DeviceTypeID" />
+                <ScalarProperty Name="DeviceDomainName" ColumnName="DeviceDomainName" />
+                <ScalarProperty Name="DeviceIP" ColumnName="DeviceIP" />
+                <ScalarProperty Name="DeviceInspectionDate" ColumnName="DeviceInspectionDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeviceTypes">
+            <EntityTypeMapping TypeName="RackBDModel.DeviceTypes">
+              <MappingFragment StoreEntitySet="DeviceTypes">
+                <ScalarProperty Name="DeviceTypeID" ColumnName="DeviceTypeID" />
+                <ScalarProperty Name="DeviceTypeName" ColumnName="DeviceTypeName" />
+                <ScalarProperty Name="DeviceTypeDescription" ColumnName="DeviceTypeDescription" />
+                <ScalarProperty Name="DeviceTypeImage" ColumnName="DeviceTypeImage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PortConnections">
+            <EntityTypeMapping TypeName="RackBDModel.PortConnections">
+              <MappingFragment StoreEntitySet="PortConnections">
+                <ScalarProperty Name="ConnectionID" ColumnName="ConnectionID" />
+                <ScalarProperty Name="PortA_ID" ColumnName="PortA_ID" />
+                <ScalarProperty Name="PortB_ID" ColumnName="PortB_ID" />
+                <ScalarProperty Name="ConnectionType" ColumnName="ConnectionType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ports">
+            <EntityTypeMapping TypeName="RackBDModel.Ports">
+              <MappingFragment StoreEntitySet="Ports">
+                <ScalarProperty Name="PortID" ColumnName="PortID" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="PortNumber" ColumnName="PortNumber" />
+                <ScalarProperty Name="PortSpeed" ColumnName="PortSpeed" />
+                <ScalarProperty Name="PortType" ColumnName="PortType" />
+                <ScalarProperty Name="PortStatus" ColumnName="PortStatus" />
+                <ScalarProperty Name="MacAdress" ColumnName="MacAdress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Racks">
+            <EntityTypeMapping TypeName="RackBDModel.Racks">
+              <MappingFragment StoreEntitySet="Racks">
+                <ScalarProperty Name="RackDataCenterID" ColumnName="RackDataCenterID" />
+                <ScalarProperty Name="RackName" ColumnName="RackName" />
+                <ScalarProperty Name="RackRow" ColumnName="RackRow" />
+                <ScalarProperty Name="RackPosition" ColumnName="RackPosition" />
+                <ScalarProperty Name="RackTotalUnits" ColumnName="RackTotalUnits" />
+                <ScalarProperty Name="RackDepth" ColumnName="RackDepth" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -35,8 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,6 +64,39 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataCenters.cs">
+      <DependentUpon>SafinModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Devices.cs">
+      <DependentUpon>SafinModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceTypes.cs">
+      <DependentUpon>SafinModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PortConnections.cs">
+      <DependentUpon>SafinModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ports.cs">
+      <DependentUpon>SafinModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Racks.cs">
+      <DependentUpon>SafinModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SafinModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SafinModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SafinModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SafinModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SafinModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SafinModel.edmx</DependentUpon>
+    </Compile>
     <Page Include="DevicePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -94,9 +136,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="SafinModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SafinModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="SafinModel.edmx.diagram">
+      <DependentUpon>SafinModel.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +157,33 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="res\R2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\noPhoto.png" />
+    <Resource Include="res\Источник безпербойного питания.png" />
+    <Resource Include="res\Коммутатор.png" />
+    <Resource Include="res\Кондиционер.png" />
+    <Resource Include="res\Маршрутизатор.png" />
+    <Resource Include="res\Оптический трансивер.png" />
+    <Resource Include="res\Панель управления питанием.png" />
+    <Resource Include="res\Сервер.png" />
+    <Resource Include="res\Сетевой экран.png" />
+    <Resource Include="res\Терминальный сервер.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SafinModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SafinModel.Context.cs</LastGenOutput>
+      <DependentUpon>SafinModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="SafinModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SafinModel.edmx</DependentUpon>
+      <LastGenOutput>SafinModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

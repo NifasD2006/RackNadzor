@@ -16,9 +16,9 @@
         <Border Grid.Row="2" Background="#FFBD7B6F" ></Border>
         <Image Grid.Row="0" Source="res/R2.png" HorizontalAlignment="Left" Margin="5" ></Image>
         <TextBlock Text="Сетевое оборудование" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" ></TextBlock>
-        <Button Name="BackBtn" Content="Назад" HorizontalAlignment="Right"  ></Button>
+        <Button Name="BackBtn" Content="Назад" HorizontalAlignment="Right" Click="BackBtn_Click" ></Button>
         
-        <Frame Grid.Row="1" Name="MainFrame" NavigationUIVisibility="Hidden" >
+        <Frame Grid.Row="1" Name="MainFrame" NavigationUIVisibility="Hidden" ContentRendered="MainFrame_ContentRendered" >
             
         </Frame>
         

@@ -23,6 +23,29 @@ namespace RackNadzor
         public DevicePage()
         {
             InitializeComponent();
+            var currentDevices = RackBDEntities.GetContext().Devices.ToList();
+
+            DeviceListView.ItemsSource = currentDevices;
+        }
+
+        private void RButtonUP_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RButtonDown_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
