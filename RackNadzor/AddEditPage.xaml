@@ -1,0 +1,126 @@
+﻿<Page x:Class="RackNadzor.AddEditPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RackNadzor"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddEditPage">
+
+    <Grid>
+
+
+
+        <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" Margin="10">
+
+            <TextBlock HorizontalAlignment="Center" FontSize="20" FontWeight="SemiBold" 
+               Margin="0,0,0,15" Foreground="#2E3440">Режим Редактирования</TextBlock>
+
+            <!-- Модель устройства -->
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBlock Text="Модель устройства:" FontSize="16" Width="180" VerticalAlignment="Center"/>
+                <TextBox Name="ModelTextBox" Width="200" Height="30" FontSize="14" VerticalContentAlignment="Center" Text="{Binding DeviceModel}"/>
+            </StackPanel>
+
+            <!-- Серийный номер -->
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBlock Text="Серийный номер:" FontSize="16" Width="180" VerticalAlignment="Center"/>
+                <TextBox Name="SerialTextBox" Width="200" Height="30" FontSize="14" VerticalContentAlignment="Center"  Text="{Binding DeviceSerialNumber }"/>
+            </StackPanel>
+
+            <!-- Производитель -->
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBlock Text="Производитель:" FontSize="16" Width="180" VerticalAlignment="Center"/>
+                <ComboBox Name="ManufacturerCombo" Width="200" Height="30" FontSize="14" VerticalContentAlignment="Center">
+                    <ComboBoxItem Content="Dell" FontSize="14"/>
+                    <ComboBoxItem Content="Cisco" FontSize="14"/>
+                    <ComboBoxItem Content="Supermicro" FontSize="14"/>
+                    <ComboBoxItem Content="HP" FontSize="14"/>
+                    <ComboBoxItem Content="Lenovo" FontSize="14"/>
+                </ComboBox>
+            </StackPanel>
+
+            <!-- Тип устройства -->
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBlock Text="Тип устройства:" FontSize="16" Width="180" VerticalAlignment="Center"/>
+                <ComboBox Name="TypeCombo" Width="200" Height="30" FontSize="14" VerticalContentAlignment="Center">
+                    <ComboBoxItem Content="Сервер"/>
+                    <ComboBoxItem Content="Терминальный сервер"/>
+                    <ComboBoxItem Content="Маршрутизатор"/>
+                    <ComboBoxItem Content="Коммутатор"/>
+                    <ComboBoxItem Content="ИБП"/>
+                    <ComboBoxItem Content="Сетевой экран"/>
+                    <ComboBoxItem Content="Кондиционер"/>
+                    <ComboBoxItem Content="Панель управления"/>
+                    <ComboBoxItem Content="Сервер баз данных"/>
+                    <ComboBoxItem Content="Оптический трансивер"/>
+                </ComboBox>
+            </StackPanel>
+
+            <!-- IP-адрес -->
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBlock Text="IP-адрес устройства:" FontSize="16" Width="180" VerticalAlignment="Center"/>
+                <TextBox Name="IPTextBox" Width="200" Height="30" FontSize="14" VerticalContentAlignment="Center"  Text="{Binding DeviceIP}" />
+            </StackPanel>
+
+            <!-- Домен -->
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBlock Text="Домен устройства:" FontSize="16" Width="180" VerticalAlignment="Center"/>
+                <TextBox Name="DomenTextBox" Width="200" Height="30" FontSize="14" VerticalContentAlignment="Center" Text="{Binding DeviceDomainName}" />
+            </StackPanel>
+
+            <!-- Настройки позиции -->
+            <TextBlock Text="Настройки позиции устройства:" FontSize="16" FontWeight="SemiBold" 
+               Margin="0,10,0,5" Foreground="#2E3440"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5">
+                <!-- Ряд -->
+                <StackPanel Orientation="Vertical" Margin="5,0">
+                    <TextBlock Text="Ряд:" FontSize="14" HorizontalAlignment="Center"/>
+                    <ComboBox Name="RaydCombo" Width="60" Height="30" FontSize="14" VerticalContentAlignment="Center">
+                        <ComboBoxItem Content="A"/>
+                        <ComboBoxItem Content="B"/>
+                        <ComboBoxItem Content="C"/>
+                        <ComboBoxItem Content="D"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Номер -->
+                <StackPanel Orientation="Vertical" Margin="5,0">
+                    <TextBlock Text="Номер:" FontSize="14" HorizontalAlignment="Center"/>
+                    <ComboBox Name="NomerCombo" Width="60" Height="30" FontSize="14" VerticalContentAlignment="Center">
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="3"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="5"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Позиция -->
+                <StackPanel Orientation="Vertical" Margin="5,0">
+                    <TextBlock Text="Позиция:" FontSize="14" HorizontalAlignment="Center"/>
+                    <TextBox Name="PozTBox" Width="60" Height="30" FontSize="14" VerticalContentAlignment="Center"
+                     TextAlignment="Center"  Text="{Binding DevicePositionInUnits }" />
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Дата тех осмотра -->
+            <StackPanel Orientation="Horizontal" Margin="0,10">
+                <TextBlock Text="Дата тех осмотра:" FontSize="16" Width="180" VerticalAlignment="Center"/>
+                <DatePicker Name="DataInspect" Width="120" Height="30" FontSize="14" VerticalContentAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5">
+                    <CheckBox Content="Сегодня" FontSize="14" Checked="RadioButton_Checked" Margin="10,0"/>
+                </StackPanel>
+            </StackPanel>
+
+
+            <Button Content="Сохранить" Click="SaveBtn_Click" Name="SaveBtn" ></Button>
+
+
+        </StackPanel>
+
+
+    </Grid>
+</Page>

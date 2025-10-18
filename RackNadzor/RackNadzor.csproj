@@ -64,6 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddEditPage.xaml.cs">
+      <DependentUpon>AddEditPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataCenters.cs">
       <DependentUpon>SafinModel.tt</DependentUpon>
     </Compile>
@@ -97,6 +100,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SafinModel.edmx</DependentUpon>
     </Compile>
+    <Page Include="AddEditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DevicePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -171,6 +178,7 @@
     <Resource Include="res\Терминальный сервер.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="res\ref3.jpg" />
     <Content Include="SafinModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SafinModel.Context.cs</LastGenOutput>

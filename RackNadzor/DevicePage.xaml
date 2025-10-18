@@ -12,15 +12,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="20" ></RowDefinition>
+            <RowDefinition Height="30" ></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Поиск:" FontSize="22" Margin="5" ></TextBlock>
-                <TextBox Width="340" Height="30"  Margin="5"  FontSize="22" TextChanged="TextBox_TextChanged" ></TextBox>
-
+                <TextBox Width="315" Height="30"  Margin="5"  FontSize="22" TextChanged="TextBox_TextChanged" Name="TextBoxSearch" ></TextBox>
                 <TextBlock Text="Производитель:" FontSize="22" Margin="5" ></TextBlock>
-                <ComboBox FontSize="15" Width="180" Height="40" SelectionChanged="ComboBox_SelectionChanged" >
+                <ComboBox FontSize="15" Width="180" Height="40" SelectionChanged="ComboBox_SelectionChanged" Name="WendorComboBox" >
                     <TextBlock Height="30" Margin="5" Width="150" FontSize="22" > Любой</TextBlock>
                     <TextBlock Height="30" Margin="5" Width="150" FontSize="22" > Dell</TextBlock>
                     <TextBlock Height="30" Margin="5" Width="150" FontSize="22" > Cisco</TextBlock>
@@ -29,13 +28,27 @@
                     <TextBlock Height="30" Margin="5" Width="150" FontSize="22" > Lenovo</TextBlock>
                 </ComboBox>
             </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="5">
-                <TextBlock Text="Сортировка по дате тех обслуживания" FontSize="22"></TextBlock>
-                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5">
-                    <RadioButton Content="По возрастанию" GroupName="Sort" Width="180" FontSize="20" x:Name="RButtonUP" Checked="RButtonUP_Checked"/>
-                    <RadioButton Content="По убыванию" GroupName="Sort" Width="180" FontSize="20" x:Name="RButtonDown" Checked="RButtonDown_Checked"/>
+
+            <StackPanel Orientation="Horizontal" >
+                
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <TextBlock Text="Сортировка по дате тех обслуживания" FontSize="22"></TextBlock>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5">
+                        <RadioButton Content="По возрастанию" GroupName="Sort" Width="180" FontSize="20" x:Name="RButtonUP" Checked="RButtonUP_Checked"/>
+                        <RadioButton Content="По убыванию" GroupName="Sort" Width="180" FontSize="20" x:Name="RButtonDown" Checked="RButtonDown_Checked"/>
+                    </StackPanel>
                 </StackPanel>
+
+                <Button Width="35" Margin="80,0,15,0" Click="RefrashBtn_Click" Name="RefrashBtn">
+                    <Image Source="res\ref3.jpg" ></Image>
+                </Button>
+                <Button Margin="0,0,0,0" Width="190" Name="AddBtn" Click="AddBtn_Click" >Новое устройство </Button>
+
+
+                
             </StackPanel>
+
+            
         </StackPanel>
 
         
@@ -58,7 +71,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Image Width="300" Grid.RowSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Stretch="Uniform">
+                            <Image Width="300" Grid.RowSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="200,5,5,5" Stretch="Uniform">
                                 <Image.Source>
                                     <Binding Path="DeviceTypes.DeviceTypeImage">
                                         <Binding.TargetNullValue>
@@ -80,6 +93,11 @@
                                     <TextBlock Text="{Binding DeviceIP, StringFormat=IP/Domen: {0}/}"  FontSize="20" ></TextBlock>
                                     <TextBlock Text="{Binding DeviceDomainName }" FontSize="20" ></TextBlock>
                                 </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button HorizontalAlignment="Left" Margin="0,5,5,0" Width="200" >Редактировать</Button>
+                                    <Button HorizontalAlignment="Left" Margin="0,5,5,0" Width="200" >Удалить</Button>
+                                </StackPanel>
+                                
                             </StackPanel>
                             
                             
@@ -104,6 +122,14 @@
             </ListView>
         </Grid>
 
+        <StackPanel  Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,7,0,0" >
+            <TextBlock Text="Текующие кол-во устройств: " ></TextBlock>
+            <TextBlock Name="CountTBlock"  ></TextBlock>
+            <TextBlock Text="/"  ></TextBlock>
+            <TextBlock Name="MaxCountTBlock"  ></TextBlock>
+            
+        </StackPanel>
+        
 
     </Grid>
 </Page>
