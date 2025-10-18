@@ -1,0 +1,26 @@
+﻿<Window x:Class="RackNadzor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RackNadzor"
+        mc:Ignorable="d"
+        Title="RackNadzor" Height="450" Width="800" FontFamily="Impact" Icon="res\R2.ico" >
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"  ></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="10" ></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="#FFBD7B6F" ></Border>
+        <Border Grid.Row="2" Background="#FFBD7B6F" ></Border>
+        <Image Grid.Row="0" Source="res/R2.png" HorizontalAlignment="Left" Margin="5" ></Image>
+        <TextBlock Text="Сетевое оборудование" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" ></TextBlock>
+        <Button Name="BackBtn" Content="Назад" HorizontalAlignment="Right"  ></Button>
+        
+        <Frame Grid.Row="1" Name="MainFrame" NavigationUIVisibility="Hidden" >
+            
+        </Frame>
+        
+    </Grid>
+</Window>
