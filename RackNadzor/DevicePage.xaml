@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:RackNadzor"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="DevicePage" FontFamily="Segoe UI">
+      Title="DevicePage" FontFamily="Segoe UI"       Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -94,8 +94,8 @@
                                     <TextBlock Text="{Binding DeviceDomainName }" FontSize="20" ></TextBlock>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button HorizontalAlignment="Left" Margin="0,5,5,0" Width="200" >Редактировать</Button>
-                                    <Button HorizontalAlignment="Left" Margin="0,5,5,0" Width="200" >Удалить</Button>
+                                    <Button HorizontalAlignment="Left" Margin="0,5,5,0" Width="200" Name="EditBtn" Click="EditBtn_Click" >Редактировать</Button>
+                                    <Button HorizontalAlignment="Left" Margin="0,5,5,0" Width="200" Name="DeleteBtn" Click="DeleteBtn_Click" >Удалить</Button>
                                 </StackPanel>
                                 
                             </StackPanel>

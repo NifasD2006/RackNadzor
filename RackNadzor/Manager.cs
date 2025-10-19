@@ -9,8 +9,8 @@ namespace RackNadzor
 {
     internal class Manager
     {
-
         public static Frame MainFrame { get; set; }
 
+        public static Frame PortFrame { get; set; } 
     }
 }

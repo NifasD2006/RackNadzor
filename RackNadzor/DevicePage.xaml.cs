@@ -20,26 +20,33 @@ namespace RackNadzor
     /// </summary>
     public partial class DevicePage : Page
     {
+        int MaxCountDevices;
         public DevicePage()
         {
-
-
             InitializeComponent();
-            var currentDevices = RackBDEntities.GetContext().Devices.ToList();
 
+            var currentDevices = RackBDEntities1.GetContext().Devices.ToList();
             DeviceListView.ItemsSource = currentDevices;
-            int MaxCountDevices = DeviceListView.Items.Count;
+            MaxCountDevices = currentDevices.Count;
+
             int CountDevices = DeviceListView.Items.Count;
             WendorComboBox.SelectedIndex = 0;
             MaxCountTBlock.Text = MaxCountDevices.ToString();
             UpdateDevices();
         }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            int CountDevices = DeviceListView.Items.Count;
+            UpdateDevices();
+        }
+
 
         private void UpdateDevices()
         {
-            var currentDevices = RackBDEntities.GetContext().Devices.ToList();
-
+            var currentDevices = RackBDEntities1.GetContext().Devices.ToList();
+            MaxCountDevices = currentDevices.Count;
+            MaxCountTBlock.Text = MaxCountDevices.ToString();
             if (WendorComboBox.SelectedIndex == 1)
                 currentDevices = currentDevices.Where(p => p.DeviceManufacturer== "Dell").ToList();
             if (WendorComboBox.SelectedIndex == 2)
@@ -106,7 +113,47 @@ namespace RackNadzor
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
 
-            Manager.MainFrame.Navigate(new AddEditPage());
+            Manager.MainFrame.Navigate(new AddEditPage(null));
+
+        }
+
+        private void EditBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage((sender as Button).DataContext as Devices));
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+            var currentDevice = (sender as Button).DataContext as Devices;
+            var currentPortsDevice = RackBDEntities1.GetContext().Ports.ToList();
+            currentPortsDevice = currentPortsDevice.Where(p => p.DeviceID == currentDevice.DeviceID).ToList();
+            if (currentPortsDevice.Count != 0)
+            {
+                MessageBox.Show("Это устройство имеет занятые порты, сперва отключить его от других устройств!");
+            }
+            else
+            {
+                if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        RackBDEntities1.GetContext().Devices.Remove(currentDevice);
+                        RackBDEntities1.GetContext().SaveChanges();
+                        DeviceListView.ItemsSource = RackBDEntities1.GetContext().Devices.ToList();
+                        MaxCountDevices = MaxCountDevices - 1;
+                        MaxCountTBlock.Text = MaxCountDevices.ToString(); 
+                        UpdateDevices();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                    }
+                }
+            }
+
+
+
 
         }
     }

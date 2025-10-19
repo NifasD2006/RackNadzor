@@ -22,10 +22,33 @@ namespace RackNadzor
     {
 
         private Devices _currentDevice = new Devices();
-        public AddEditPage()
+        private int devid;
+        public AddEditPage(Devices SelectDevice)
         {
             InitializeComponent();
+
+            Manager.PortFrame = PortFrame;
+            
+
+            if (SelectDevice != null)
+            {
+                _currentDevice = SelectDevice;
+                ManufacturerCombo.Text=_currentDevice.DeviceManufacturer;
+                if (_currentDevice.DeviceID != 0) // Если редактирование
+                {
+                    TypeCombo.SelectedIndex = _currentDevice.DeviceTypeID - 1; // -1 если индексы начинаются с 0
+                }
+                RaydCombo.Text = _currentDevice.DeviceRackName[0].ToString();
+                NomerCombo.Text = _currentDevice.DeviceRackName[1].ToString();
+                DataInspect.SelectedDate = _currentDevice.DeviceInspectionDate;
+
+                devid = _currentDevice.DeviceID;
+                PortFrame.Navigate(new PortPage(devid));
+
+            }
             DataContext = _currentDevice;
+
+
         }
 
 
@@ -45,11 +68,25 @@ namespace RackNadzor
 
             if (string.IsNullOrEmpty(_currentDevice.DeviceSerialNumber))
                 errors.AppendLine("Укажите серийный номер");
+            else
+            {
+                // Проверяем, существует ли уже такой серийный номер
+                bool serialExists = RackBDEntities1.GetContext().Devices
+                    .Any(d => d.DeviceSerialNumber == _currentDevice.DeviceSerialNumber &&
+                             d.DeviceID != _currentDevice.DeviceID); // Исключаем текущее устройство при редактировании
+
+                if (serialExists)
+                    errors.AppendLine("Устройство с таким серийным номером уже существует");
+            }
 
             if (string.IsNullOrEmpty(_currentDevice.DeviceIP))
+            {
                 errors.AppendLine("Укажите IP-Адрес");
+            }
             else if (!System.Net.IPAddress.TryParse(_currentDevice.DeviceIP, out _))
-                errors.AppendLine("Некорректный формат IP-адреса");
+            {
+                errors.AppendLine("Некорректный формат IP-адреса. Пример: 192.168.1.1");
+            }
 
             if (string.IsNullOrEmpty(_currentDevice.DevicePositionInUnits.ToString()) && _currentDevice.DevicePositionInUnits>0 && _currentDevice.DevicePositionInUnits > 48)
                 errors.AppendLine("Укажите название позицию в стойке");
@@ -81,14 +118,16 @@ namespace RackNadzor
             _currentDevice.DeviceSizeInUnits = 1;
             _currentDevice.DeviceDataCenters = 1;
 
+
+
             if (_currentDevice.DeviceID == 0)
             {
-                RackBDEntities.GetContext().Devices.Add(_currentDevice);
+                RackBDEntities1.GetContext().Devices.Add(_currentDevice);
             }
 
             try
             {
-                RackBDEntities.GetContext().SaveChanges();
+                RackBDEntities1.GetContext().SaveChanges();
                 MessageBox.Show("Информация сохранена!");
                 Manager.MainFrame.GoBack();
             }
@@ -98,5 +137,8 @@ namespace RackNadzor
             }
 
         }
+
+
+
     }
 }

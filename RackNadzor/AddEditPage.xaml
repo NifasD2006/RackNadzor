@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:RackNadzor"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AddEditPage">
+      Title="AddEditPage" FontFamily="Tw Cen MT" >
 
     <Grid>
 
@@ -117,10 +117,10 @@
 
 
             <Button Content="Сохранить" Click="SaveBtn_Click" Name="SaveBtn" ></Button>
-
+            <Frame Name="PortFrame" NavigationUIVisibility="Hidden"  ></Frame>
+           
+            
 
         </StackPanel>
-
-
     </Grid>
 </Page>
