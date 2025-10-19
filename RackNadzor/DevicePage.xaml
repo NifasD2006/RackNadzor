@@ -123,10 +123,10 @@
         </Grid>
 
         <StackPanel  Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,7,0,0" >
-            <TextBlock Text="Текующие кол-во устройств: " ></TextBlock>
-            <TextBlock Name="CountTBlock"  ></TextBlock>
-            <TextBlock Text="/"  ></TextBlock>
-            <TextBlock Name="MaxCountTBlock"  ></TextBlock>
+            <TextBlock Text="Текующие кол-во устройств: " FontSize="18" ></TextBlock>
+            <TextBlock Name="CountTBlock" FontSize="18"  ></TextBlock>
+            <TextBlock Text="/" FontSize="18"  ></TextBlock>
+            <TextBlock Name="MaxCountTBlock" FontSize="18"   ></TextBlock>
             
         </StackPanel>
         

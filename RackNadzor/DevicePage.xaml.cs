@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.Entity;
 
 namespace RackNadzor
 {
@@ -25,7 +26,7 @@ namespace RackNadzor
         {
             InitializeComponent();
 
-            var currentDevices = RackBDEntities1.GetContext().Devices.ToList();
+            var currentDevices = RackBDEntities1.GetContext().Devices.Include(d => d.Racks).Include(d => d.Racks.DataCenters).ToList();
             DeviceListView.ItemsSource = currentDevices;
             MaxCountDevices = currentDevices.Count;
 
@@ -44,7 +45,7 @@ namespace RackNadzor
 
         private void UpdateDevices()
         {
-            var currentDevices = RackBDEntities1.GetContext().Devices.ToList();
+            var currentDevices = RackBDEntities1.GetContext().Devices.Include(d => d.Racks).Include(d => d.Racks.DataCenters).ToList();П
             MaxCountDevices = currentDevices.Count;
             MaxCountTBlock.Text = MaxCountDevices.ToString();
             if (WendorComboBox.SelectedIndex == 1)

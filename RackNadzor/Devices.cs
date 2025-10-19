@@ -29,7 +29,26 @@ namespace RackNadzor
         public string DeviceManufacturer { get; set; }
         public string DeviceSerialNumber { get; set; }
         public int DeviceTypeID { get; set; }
-        public string DeviceDomainName { get; set; }
+        private string _deviceDomainName;
+
+        public string DeviceDomainName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_deviceDomainName))
+                {
+                    return "нет домена";
+                }
+                else
+                {
+                    return _deviceDomainName;
+                }
+            }
+            set
+            {
+                _deviceDomainName = value;
+            }
+        }
         public string DeviceIP { get; set; }
         public Nullable<System.DateTime> DeviceInspectionDate { get; set; }
     

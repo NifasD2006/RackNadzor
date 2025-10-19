@@ -49,11 +49,14 @@
                     <ComboBoxItem Content="Терминальный сервер"/>
                     <ComboBoxItem Content="Маршрутизатор"/>
                     <ComboBoxItem Content="Коммутатор"/>
-                    <ComboBoxItem Content="ИБП"/>
-                    <ComboBoxItem Content="Сетевой экран"/>
+                    <ComboBoxItem Content="ИБП (Источник бесперебойного питания)"/>
+                    <ComboBoxItem Content="Система хранения данных (СХД)"/>
+                    <ComboBoxItem Content="Сетевой экран (Firewall)"/>
                     <ComboBoxItem Content="Кондиционер"/>
-                    <ComboBoxItem Content="Панель управления"/>
+                    <ComboBoxItem Content="Панель управления питанием (PDU)"/>
                     <ComboBoxItem Content="Сервер баз данных"/>
+                    <ComboBoxItem Content="Контроллер доступа"/>
+                    <ComboBoxItem Content="Система мониторинга"/>
                     <ComboBoxItem Content="Оптический трансивер"/>
                 </ComboBox>
             </StackPanel>
