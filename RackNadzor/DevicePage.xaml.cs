@@ -45,7 +45,7 @@ namespace RackNadzor
 
         private void UpdateDevices()
         {
-            var currentDevices = RackBDEntities1.GetContext().Devices.Include(d => d.Racks).Include(d => d.Racks.DataCenters).ToList();П
+            var currentDevices = RackBDEntities1.GetContext().Devices.Include(d => d.Racks).Include(d => d.Racks.DataCenters).ToList();
             MaxCountDevices = currentDevices.Count;
             MaxCountTBlock.Text = MaxCountDevices.ToString();
             if (WendorComboBox.SelectedIndex == 1)
